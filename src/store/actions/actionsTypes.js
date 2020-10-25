@@ -1,0 +1,6 @@
+export const ADD_COLOR ="ADD_COLOR"
+export const ADD_TOTAL = "ADD_TOTAL"
+export const REMOVE_TOTAL="REMOVE_TOTAL"
+export const ADD_CLOTHE="ADD_CLOTHE"
+export const REMOVE_CLOTHE="REMOVE_CLOTHE"
+export const ADD_QUANTITY="ADD_QUANTITY"
