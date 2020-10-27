@@ -1,3 +1,6 @@
+<b>a small web e-commerce app for clothing build with reactJs and material-ui</b>
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
