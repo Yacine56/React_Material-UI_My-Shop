@@ -9,11 +9,11 @@ useEffect(()=>{
 
 let ui= props.field==="input" ? 
    ( <div>
-        <label for={props.name} {...props.inputlabel}>{props.label}</label><br />
+        <label htmlFor={props.name} {...props.inputlabel}>{props.label}</label><br />
         <input name={props.name} type={props.type}   {...props} />
     </div> ):
    (  <div>
-     <label for={props.name} {...props.inputlabel}>{props.label}</label><br />
+     <label htmlFor={props.name} {...props.inputlabel}>{props.label}</label><br />
      <textarea name={props.name}  {...props}/>
  </div> )
 

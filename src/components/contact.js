@@ -8,14 +8,17 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
-
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const Contact = () => {
   const classes = useStyle();
@@ -25,6 +28,9 @@ const Contact = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [details, setDetails] = useState("");
   const [open, setOpen] = React.useState(false);
+  const [emailError,setEmailError]=useState(false)
+  const [openSnack,setOpenSnack]=useState(false)
+
 
   const onChange = (event) => {
     let valide;
@@ -41,7 +47,14 @@ const Contact = () => {
           setLastName(event.target.value);
         }break;
       case "email":
-        setEmail(event.target.value);break;
+        setEmail(event.target.value)
+        valide=/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(event.target.value)
+      if(!valide){
+        setEmailError(true);break;
+      }else{
+        setEmailError(false);break;
+      }
+        
 
       case "phoneNumber":
         valide = /^\d*$/.test(event.target.value);
@@ -51,7 +64,9 @@ const Contact = () => {
 
       case "details":
         setDetails(event.target.value);break;
-    }
+        default: break;
+      }
+      
   
   };
 
@@ -64,14 +79,15 @@ const Contact = () => {
     setOpen(false)
   };
 
-  const submit = () => {};
+  const submit = () => {
+    
+        setOpenSnack(true)
+  }
 
-  const openResetDialogue=()=>{
-    setOpen(true);
-}
+  
 
 const handleClose = () => {
-  setOpen(false);
+  
  
 };
 
@@ -121,8 +137,9 @@ const handleClose = () => {
           required
           name="email"
           className={classes.input}
-          inputlabel={{ className: classes.inputLabel }}
+          inputlabel={{ className:classes.inputLabel,style:{ color:emailError && "#cc0033"}}}
           onChange={onChange}
+          style={{  backgroundColor:emailError &&  "#fce4e4", outline:emailError &&  "none"}}
         />
         <Input
           label="Phone Number"
@@ -155,7 +172,7 @@ const handleClose = () => {
           <Button
             variant="contained"
             className={classes.reset}
-            onClick={openResetDialogue}
+            onClick={()=>{setOpen(true)}}
             disabled={(
               firstName.length === 0 &&
               lastName.length === 0 &&
@@ -163,6 +180,12 @@ const handleClose = () => {
               email.length === 0 &&
               details.length === 0)
             }
+            style={{background:(
+              firstName.length === 0 &&
+              lastName.length === 0 &&
+              phoneNumber.length === 0 &&
+              email.length === 0 &&
+              details.length === 0) && "none"}}
           >
             <Typography className={classes.resetText}>Reset Form</Typography>
           </Button>
@@ -175,14 +198,16 @@ const handleClose = () => {
               lastName.length === 0 ||
               phoneNumber.length === 0 ||
               email.length === 0 ||
-              details.length === 0
+              details.length === 0 ||
+              emailError
             )}
             style={{ backgroundImage:  (
               firstName.length === 0 ||
               lastName.length === 0 ||
               phoneNumber.length === 0 ||
               email.length === 0 ||
-              details.length === 0
+              details.length === 0 ||
+              emailError
             ) && "none" }}
           >
             <Typography className={classes.resetText}>Submit</Typography>
@@ -201,7 +226,7 @@ const handleClose = () => {
         <DialogTitle id="alert-dialog-slide-title">{"Do you really want to reset the form?"}</DialogTitle>
         
         <DialogActions>
-          <Button onClick={handleClose} color="secondary" variant="contained">
+          <Button onClick={()=>{setOpen(false)}} color="secondary" variant="contained">
             Cancel
           </Button>
           <Button onClick={onReset} color="primary" variant="contained">
@@ -209,6 +234,11 @@ const handleClose = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      <Snackbar open={openSnack} bodyStyle={classes.snack} autoHideDuration={6000} onClose={()=>{setOpenSnack(false)}} anchorOrigin={{ vertical:"top", horizontal:"center" }}>
+        <Alert onClose={()=>{setOpenSnack(false)}} severity="success">
+          success
+        </Alert>
+      </Snackbar>
     </Grid>
   );
 };

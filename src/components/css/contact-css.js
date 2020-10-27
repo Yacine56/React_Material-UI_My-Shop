@@ -24,6 +24,7 @@ export const useStyle=makeStyles(theme=>({
     },
     
     input :{
+        
         fontSize: "inherit",
         fontWeight: "inherit",
         textDecoration: "none",
@@ -35,7 +36,7 @@ export const useStyle=makeStyles(theme=>({
         backgroundColor:"transparent",
         borderBottom:"1px solid #BA55D3",
         fontSize:"1.3rem",
-        fontFamily:"Raleway",
+        fontFamily:" Raleway",
         "&:focus":{
             outline:"none",
             boxShadow:"0px 10px 10px -5px #BA55D3"
@@ -94,6 +95,10 @@ export const useStyle=makeStyles(theme=>({
         [theme.breakpoints.down("md")]:{
             fontSize:"1.2rem"
         }
-    }
+    },
+    snack:{
+        width:"100%"
+    },
+   
 
 }))
